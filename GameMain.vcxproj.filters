@@ -18,5 +18,13 @@
     <ClCompile Include="GameMain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GameSkeleton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameSkeleton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
