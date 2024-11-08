@@ -6,7 +6,7 @@
 const int thickness = 15;
 const int window_w = 1024;
 const int window_h = 768;
-
+const int FPS = 1000;
 const float paddleH = 100.0f;
 
 // area & wall
@@ -106,7 +106,7 @@ void GameSkeleton::ProcessInput()
 	}
 
 	mPaddleDir = 0;
-	if (state[SDL_SCANCODE_W])
+	if (state[SDL_SCANCODE_W]) // 还得切英文输入法
 	{
 		mPaddleDir -= 1;
 	}
@@ -119,7 +119,8 @@ void GameSkeleton::ProcessInput()
 
 void GameSkeleton::UpdateGame()
 {
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16)) ;
+	// Wait until 16ms has elapsed since last frame
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + (int)(1000.0f / FPS))); 
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 	if (deltaTime > 0.05f)
 		deltaTime = 0.05f;
@@ -132,7 +133,7 @@ void GameSkeleton::UpdateGame()
 			mPaddlePos.y = paddleH / 2.0f + thickness;
 		else if (mPaddlePos.y > window_h - paddleH / 2.0f - thickness)
 			mPaddlePos.y = window_h - paddleH / 2.0f - thickness;
-	}	
+	}
 	
 }
 
@@ -166,7 +167,7 @@ void GameSkeleton::GenerateOutput()
 	};
 	SDL_RenderFillRect(mRenderer, &ball);
 
-	SDL_RenderPresent(mRenderer); // 放最后
+	SDL_RenderPresent(mRenderer); 
 }
 
 void GameSkeleton::ShutDown()
