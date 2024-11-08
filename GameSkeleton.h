@@ -20,10 +20,17 @@ private:
 	void UpdateGame();
 	void GenerateOutput();
 
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	Uint32 mTicksCount;
 
-	Vector2 ballPos;
-	bool isRunning;
+	SDL_Window* mWindow;
+	SDL_Renderer* mRenderer;
+	// obj
+	Vector2 mBallPos;
+	Vector2 mBallVel;
+	Vector2 mPaddlePos; // 具体是板子的左侧边的中心点
+	int mPaddleDir; // direction of paddle
+
+	// flag
+	bool mIsRunning;
 };
 

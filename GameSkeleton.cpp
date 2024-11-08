@@ -1,13 +1,28 @@
 #include "GameSkeleton.h"
 
+#include <iostream>
+
 
 const int thickness = 15;
+const int window_w = 1024;
+const int window_h = 768;
+
+const float paddleH = 100.0f;
+
+// area & wall
+SDL_Rect tWall{ 0, 0, 1024, thickness };
+SDL_Rect bWall{ 0, window_h - thickness, 1024, thickness };
+SDL_Rect rWall{ window_w - thickness, 0, thickness,  window_h};
+
+// 可移动区域就是离边thinkness距离的区域，包括左边
+
 
 
 GameSkeleton::GameSkeleton()
-	: window(nullptr)
-	, renderer(nullptr)
-	,isRunning(true)
+	: mWindow(nullptr)
+	, mRenderer(nullptr)
+	, mIsRunning(true)
+	, mPaddleDir(0)
 {
 
 }
@@ -27,40 +42,36 @@ bool GameSkeleton::Initialize()
 		return false;
 	}
 
-	window = SDL_CreateWindow(
+	mWindow = SDL_CreateWindow(
 		"Game Programing in C++ (Chapter 1).",
-		100, // x
-		100, // y
-		1024, // w
-		768, // h
-		0 // g
-	);
-
-	if (!window)
+		20, 20, window_w, window_h, 0);
+	if (!mWindow)
 	{
-		SDL_Log("Fail to create window:％s", SDL_GetError());
+		SDL_Log("Fail to create mWindow:％s", SDL_GetError());
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(
-		window,
-		-1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-	);
-	if (!renderer)
+	mRenderer = SDL_CreateRenderer(	mWindow, -1, 
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+	if (!mRenderer)
 	{
-		SDL_Log("Failed to create renderer: %s", SDL_GetError());
+		SDL_Log("Failed to create mRenderer: %s", SDL_GetError());
 		return false;
 	}
 
-	ballPos.x = 1024.0f / 2.0f;
-	ballPos.y = 768.0f / 2.0f;
+	mBallPos.x = (float)window_w / 2.0f;
+	mBallPos.y = (float)window_h / 2.0f;
+	mPaddlePos.x = 10.0f;
+	mPaddlePos.y = window_h / 2.0f;
+	mBallVel.x = -200.0f;
+	mBallVel.y = 235.0f;
 	return true;
 }
 
 void GameSkeleton::RunLoop()
 {
-	while (isRunning)
+	while (mIsRunning)
 	{
 		ProcessInput();
 		UpdateGame();
@@ -78,11 +89,12 @@ void GameSkeleton::ProcessInput()
 		{
 		case SDL_QUIT:
 		{
-			isRunning = false;
+			mIsRunning = false;
 			break;
 		}
-		default:
-			break;
+		//default: 
+		//	break;
+		// 这些不能加，否则键盘输入会出错，为什么？
 		}
 	}
 
@@ -90,41 +102,77 @@ void GameSkeleton::ProcessInput()
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 	if (state[SDL_SCANCODE_ESCAPE])
 	{
-		isRunning = false;
+		mIsRunning = false;
+	}
+
+	mPaddleDir = 0;
+	if (state[SDL_SCANCODE_W])
+	{
+		mPaddleDir -= 1;
+	}
+
+	if (state[SDL_SCANCODE_S])
+	{
+		mPaddleDir += 1;
 	}
 }
 
 void GameSkeleton::UpdateGame()
 {
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16)) ;
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+	if (deltaTime > 0.05f)
+		deltaTime = 0.05f;
+	mTicksCount = SDL_GetTicks();
+
+	if (mPaddleDir != 0)
+	{
+		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
+		if (mPaddlePos.y < (paddleH / 2.0f + thickness))
+			mPaddlePos.y = paddleH / 2.0f + thickness;
+		else if (mPaddlePos.y > window_h - paddleH / 2.0f - thickness)
+			mPaddlePos.y = window_h - paddleH / 2.0f - thickness;
+	}	
+	
 }
 
 void GameSkeleton::GenerateOutput()
 {
 	// background
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255);
+	SDL_RenderClear(mRenderer);
 	
-	// top wall
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_Rect wall{ 0, 0, 1024, thickness };
-	SDL_RenderFillRect(renderer, &wall);
+	// wall
+	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(mRenderer, &tWall);
+	SDL_RenderFillRect(mRenderer, &bWall);
+	SDL_RenderFillRect(mRenderer, &rWall);
+
+	// paddle
+	SDL_Rect paddle{
+		static_cast<int>(mPaddlePos.x),
+		static_cast<int>(mPaddlePos.y - paddleH / 2),
+		thickness,
+		static_cast<int>(paddleH)
+	};
+	SDL_RenderFillRect(mRenderer, &paddle);
 
 	// ball
 	SDL_Rect ball{
-		static_cast<int>(ballPos.x - thickness / 2),
-		static_cast<int>(ballPos.y - thickness / 2),
+		static_cast<int>(mBallPos.x - thickness / 2),
+		static_cast<int>(mBallPos.y - thickness / 2),
 		thickness,
 		thickness
 	};
-	SDL_RenderFillRect(renderer, &ball);
+	SDL_RenderFillRect(mRenderer, &ball);
 
-	SDL_RenderPresent(renderer); // 放最后
+	SDL_RenderPresent(mRenderer); // 放最后
 }
 
 void GameSkeleton::ShutDown()
 {
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(mWindow);
+	SDL_DestroyRenderer(mRenderer);
 	SDL_Quit();
 }
 
