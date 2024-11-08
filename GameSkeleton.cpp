@@ -23,9 +23,7 @@ GameSkeleton::GameSkeleton()
 	, mRenderer(nullptr)
 	, mIsRunning(true)
 	, mPaddleDir(0)
-{
-
-}
+{ }
 
 bool GameSkeleton::Initialize()
 {
@@ -119,13 +117,14 @@ void GameSkeleton::ProcessInput()
 
 void GameSkeleton::UpdateGame()
 {
-	// Wait until 16ms has elapsed since last frame
+	/* Wait until 1000/FPS has elapsed since last frame */
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + (int)(1000.0f / FPS))); 
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 	if (deltaTime > 0.05f)
 		deltaTime = 0.05f;
 	mTicksCount = SDL_GetTicks();
 
+	/* paddle */
 	if (mPaddleDir != 0)
 	{
 		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
@@ -135,6 +134,34 @@ void GameSkeleton::UpdateGame()
 			mPaddlePos.y = window_h - paddleH / 2.0f - thickness;
 	}
 	
+	// ball
+	mBallPos.x += mBallVel.x * deltaTime;
+	mBallPos.y += mBallVel.y * deltaTime;
+
+	float diff = mPaddlePos.y - mBallPos.y;
+	diff = (diff > 0.0f) ? diff : -diff; // 与挡板中心的偏差值
+	if (diff <= paddleH / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f
+		&& mBallVel.x < 0.0f)
+	{
+		mBallVel.x = -mBallVel.x;
+	}
+	else if (mBallPos.x <= 0.0f)
+	{
+		mIsRunning = false;
+	}
+	else if (mBallPos.x >= (window_w - rWall.w) && mBallVel.x > 0.0f)
+	{
+		mBallVel.x = -mBallVel.x;
+	}
+	else if (mBallPos.y >= (window_h - bWall.h) && mBallVel.y > 0.0f)
+	{
+		mBallVel.y = -mBallVel.y;
+	}
+	else if (mBallPos.y <= bWall.h && mBallVel.y < 0.0f)
+	{
+		mBallVel.y = -mBallVel.y;
+	}
+
 }
 
 void GameSkeleton::GenerateOutput()
