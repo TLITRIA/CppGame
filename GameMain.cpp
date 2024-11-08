@@ -6,14 +6,17 @@
 
 #include "GameSkeleton.h"
 
+#include "GameChapt1_Pong.h"
+#include "GameChapt2_2D.h"
+
+
 int main()
 {
     std::cout << "Hello World!\n";
-    GameSkeleton game;
+    GameChapt2_2D game;
     bool ret = game.Initialize();
 
     std::cout << (ret ? "success" : "false");
-
     if (ret)
     {
         game.RunLoop();
