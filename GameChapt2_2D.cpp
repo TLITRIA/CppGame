@@ -1,5 +1,6 @@
 #include "GameChapt2_2D.h"
 
+#include <SDL_image.h>
 const int window_w = 1024;
 const int window_h = 768;
 const int FPS = 1000;
@@ -27,7 +28,6 @@ bool GameChapt2_2D::Initialize()
 		SDL_Log("Fail to create mWindow:％s", SDL_GetError());
 		return false;
 	}
-
 	mRenderer = SDL_CreateRenderer(mWindow, -1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!mRenderer)
@@ -36,9 +36,16 @@ bool GameChapt2_2D::Initialize()
 		return false;
 	}
 
-	if()
+	if (IMG_Init(IMG_INIT_PNG) == 0)
+	{
+		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
+		return false;
+	}
 
-	// 初始化变量
+	LoadData();
+
+	mTicksCount = SDL_GetTicks();
+
 	return true;
 }
 
