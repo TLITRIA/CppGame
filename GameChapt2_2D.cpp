@@ -96,6 +96,7 @@ void GameChapt2_2D::ProcessInput()
 
 void GameChapt2_2D::UpdateGame()
 {
+
 	/* Wait until 1000/FPS has elapsed since last frame */
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + (int)(1000.0f / FPS)));
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
@@ -110,7 +111,6 @@ void GameChapt2_2D::UpdateGame()
 		actor->Update(deltaTime);
 	}
 	mUpdatingActors = false;
-
 	// Move any pending actors to mActors
 	for (auto pending : mPendingActors)
 	{

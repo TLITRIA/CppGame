@@ -9,10 +9,10 @@
 #include "GameChapt1_Pong.h"
 #include "GameChapt2_2D.h"
 
-
 int main()
 {
-    GameChapt2_2D game;
+    std::cout << "__cplusplus = " << __cplusplus << std::endl; // 199711 版本过低
+    /*GameChapt2_2D game;
     bool ret = game.Initialize();
 
     std::cout << (ret ? "success" : "false");
@@ -20,7 +20,7 @@ int main()
     {
         game.RunLoop();
     }
-    game.ShutDown();
+    game.ShutDown();*/
     return 0;
 }
 

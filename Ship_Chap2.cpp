@@ -24,6 +24,7 @@ void Ship_Chap2::UpdateActor(float deltaTime)
 {
 	Actor_Chap2::Update(deltaTime);
 	Vector2 pos = GetPosition();
+	std::cout << pos.x << pos.y << "\n";
 	pos.x += mRightSpeed * deltaTime;
 	pos.y += mDownSpeed * deltaTime;
 
@@ -53,21 +54,21 @@ void Ship_Chap2::ProcessKeyboard(const uint8_t* state)
 	mDownSpeed = 0.0f;
 
 	// rigth/left
-	if (state[SDL_SCANCODE_UP])
+	
+	if (state[SDL_SCANCODE_W])
 	{
 		mDownSpeed -= 300.0f;
 	}
-	if (state[SDL_SCANCODE_DOWN])
+	if (state[SDL_SCANCODE_S])
 	{
 		mDownSpeed += 300.0f;
 	}
-	if (state[SDL_SCANCODE_LEFT])
+	if (state[SDL_SCANCODE_A])
 	{
 		mRightSpeed -= 250.0f;
 	}
-	if (state[SDL_SCANCODE_RIGHT])
+	if (state[SDL_SCANCODE_D])
 	{
 		mRightSpeed += 250.0f;
 	}
-
 }

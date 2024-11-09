@@ -27,8 +27,9 @@ void Actor_Chap2::Update(float deltaTime)
 {
 	if (mState == EActive)
 	{
-		Actor_Chap2::UpdateComponents(deltaTime);
-		Actor_Chap2::UpdateActor(deltaTime);
+		std::cout << __FUNCTION__ << ":" << __LINE__ << __cplusplus << "\n";
+		UpdateComponents(deltaTime);
+		Actor_Chap2::UpdateActor(deltaTime);   // CRTP
 	}
 }
 
@@ -40,6 +41,7 @@ void Actor_Chap2::UpdateComponents(float deltaTime)
 {
 	for (auto comp : mComponents)
 	{
+		std::cout << __FUNCTION__ << ":" << __LINE__ << "\n";
 		comp->Update(deltaTime);
 	}
 }
