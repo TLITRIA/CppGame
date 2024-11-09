@@ -3,9 +3,9 @@
 #define SDL_MAIN_HANDLED
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "GameSkeleton.h"
-
 #include "GameChapt1_Pong.h"
 #include "GameChapt2_2D.h"
 

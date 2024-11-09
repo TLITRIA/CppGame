@@ -1,12 +1,8 @@
 #pragma once
 
 #include <SDL.h>
+#include "Vector2.h"
 
-struct Vector2
-{
-	float x;
-	float y;
-};
 class GameChapt1_Pong
 {
 public:

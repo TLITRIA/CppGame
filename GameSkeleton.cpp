@@ -15,7 +15,7 @@ bool GameSkeleton::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
-		SDL_Log("Unable to initialize SDL:£¥s", SDL_GetError());
+		SDL_Log("Unable to initialize SDL:%s", SDL_GetError());
 		return false;
 	}
 
@@ -24,7 +24,7 @@ bool GameSkeleton::Initialize()
 		20, 20, window_w, window_h, 0);
 	if (!mWindow)
 	{
-		SDL_Log("Fail to create mWindow:£¥s", SDL_GetError());
+		SDL_Log("Fail to create mWindow:%s", SDL_GetError());
 		return false;
 	}
 
@@ -96,6 +96,8 @@ void GameSkeleton::UpdateGame()
 
 void GameSkeleton::GenerateOutput()
 {
+	SDL_RenderClear(mRenderer);
+
 	SDL_RenderPresent(mRenderer); 
 }
 

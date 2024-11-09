@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-
 const int thickness = 15;
 const int window_w = 1024;
 const int window_h = 768;
@@ -36,7 +35,7 @@ bool GameChapt1_Pong::Initialize()
 	*/
 	if (sdlResult != 0)
 	{
-		SDL_Log("Unable to initialize SDL:£¥s", SDL_GetError());
+		SDL_Log("Unable to initialize SDL:%s", SDL_GetError());
 		return false;
 	}
 
@@ -45,7 +44,7 @@ bool GameChapt1_Pong::Initialize()
 		20, 20, window_w, window_h, 0);
 	if (!mWindow)
 	{
-		SDL_Log("Fail to create mWindow:£¥s", SDL_GetError());
+		SDL_Log("Fail to create mWindow:%s", SDL_GetError());
 		return false;
 	}
 
@@ -62,8 +61,8 @@ bool GameChapt1_Pong::Initialize()
 	mBallPos.y = (float)window_h / 2.0f;
 	mPaddlePos.x = 10.0f;
 	mPaddlePos.y = window_h / 2.0f;
-	mBallVel.x = -200.0f;
-	mBallVel.y = 235.0f;
+	mBallVel.x = 200.0f;
+	mBallVel.y = -235.0f;
 	return true;
 }
 

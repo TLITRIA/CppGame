@@ -27,6 +27,24 @@
     <ClCompile Include="GameChapt1_Pong.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Ship_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Component_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimSpriteComponent_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BGSpriteComponent_Chap2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSkeleton.h">
@@ -36,6 +54,27 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameChapt1_Pong.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship_Chap2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor_Chap2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Component_Chap2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent_Chap2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimSpriteComponent_Chap2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BGSpriteComponent_Chap2.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

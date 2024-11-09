@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-
+#include <SDL_image.h>
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -14,6 +14,12 @@ public:
 	bool Initialize();
 	void RunLoop();
 	void ShutDown();
+
+	void AddActor(class Actor_Chap2* actor);
+	void RemoveActor(class Actor_Chap2* actor);
+
+	void AddSprite(class SpriteComponent_Chap2* sprite);
+	void RemoveSprite(class SpriteComponent_Chap2* sprite);
 
 	SDL_Texture* GetTexture(const std::string& fileName);
 private:
