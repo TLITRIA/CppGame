@@ -2,6 +2,8 @@
 #include "GameChapt2_2D.h"
 #include "AnimSpriteComponent_Chap2.h"
 
+
+#include <iostream>
 Ship_Chap2::Ship_Chap2(GameChapt2_2D* game)
 	: Actor_Chap2(game)
 	, mRightSpeed(0.0f)
@@ -53,19 +55,19 @@ void Ship_Chap2::ProcessKeyboard(const uint8_t* state)
 	// rigth/left
 	if (state[SDL_SCANCODE_UP])
 	{
-		mRightSpeed += 300.0f;
+		mDownSpeed -= 300.0f;
 	}
 	if (state[SDL_SCANCODE_DOWN])
 	{
-		mRightSpeed -= 300.0f;
+		mDownSpeed += 300.0f;
 	}
 	if (state[SDL_SCANCODE_LEFT])
 	{
-		mRightSpeed += 250.0f;
+		mRightSpeed -= 250.0f;
 	}
 	if (state[SDL_SCANCODE_RIGHT])
 	{
-		mRightSpeed -= 250.0f;
+		mRightSpeed += 250.0f;
 	}
 
 }

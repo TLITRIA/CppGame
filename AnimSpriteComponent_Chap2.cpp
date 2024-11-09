@@ -1,6 +1,4 @@
 #include "AnimSpriteComponent_Chap2.h"
-#include "SpriteComponent_Chap2.h"
-//#include "Component_Chap2.h"
 
 AnimSpriteComponent_Chap2::AnimSpriteComponent_Chap2(Actor_Chap2* owner, int drawOrder)
 	: SpriteComponent_Chap2(owner, drawOrder)
@@ -11,7 +9,7 @@ AnimSpriteComponent_Chap2::AnimSpriteComponent_Chap2(Actor_Chap2* owner, int dra
 
 void AnimSpriteComponent_Chap2::Update(float deltaTime)
 {
-	SpriteComponent_Chap2::Update(deltaTime);
+	//SpriteComponent_Chap2:: // ??
 
 	if (mAnimTextures.size() > 0)
 	{

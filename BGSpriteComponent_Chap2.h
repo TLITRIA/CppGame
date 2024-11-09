@@ -1,6 +1,5 @@
 #pragma once
 #include "SpriteComponent_Chap2.h"
-#include <SDL.h>
 #include "Vector2.h"
 #include <vector>
 
@@ -18,6 +17,7 @@ public:
 	void SetScreenSize(const Vector2& size) { mScreenSize = size; }
 	void SetScrollSpeed(float speed) { mScrollSpeed = speed; }
 	float GetScrollSpeed() const { return mScrollSpeed; }
+	
 private:
 	struct BGTexture
 	{

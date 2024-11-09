@@ -11,7 +11,7 @@
 
 const int window_w = 1024;
 const int window_h = 768;
-const int FPS = 1000;
+const int FPS = 24;
 
 GameChapt2_2D::GameChapt2_2D()
 	: mWindow(nullptr)
@@ -30,7 +30,7 @@ bool GameChapt2_2D::Initialize()
 
 	mWindow = SDL_CreateWindow(
 		"Game Programing in C++ (Chapter 2).",
-		20, 20, window_w, window_h, 0);
+		100, 100, window_w, window_h, 0);
 	if (!mWindow)
 	{
 		SDL_Log("Fail to create mWindow:%s", SDL_GetError());
@@ -154,10 +154,11 @@ void GameChapt2_2D::LoadData()
 	// create player's ship 
 	mShip = new Ship_Chap2(this);
 	mShip->SetPosition(Vector2{100.0f, 384.0f});
+	mShip->SetScale(1.5f);
 
 	// Create actor for the background
 	Actor_Chap2* temp = new Actor_Chap2(this);
-	temp->SetPosition(Vector2{ 500.0f, 384.0f });
+	temp->SetPosition(Vector2{ 512.0f, 384.0f });
 
 	// Create the farBack background
 	BGSpriteComponent_Chap2* bg = new BGSpriteComponent_Chap2(temp);
@@ -177,8 +178,7 @@ void GameChapt2_2D::LoadData()
 		GetTexture("Assets/Stars.png")
 	};
 	bg->SetBGTextures(bgtexs);
-	bg->SetScrollSpeed(-200.f);
-
+	bg->SetScrollSpeed(-200.0f);
 }
 
 void GameChapt2_2D::UnloadData()
@@ -280,8 +280,8 @@ SDL_Texture* GameChapt2_2D::GetTexture(const std::string& fileName)
 			SDL_Log("Fail to convert surface to texture for %s", fileName.c_str());
 			return nullptr;
 		}
-		return tex;
+		mTextures.emplace(fileName.c_str(), tex); // ´íÎó
 	}
-	return nullptr;
+	return tex; // ´íÎó
 }
 

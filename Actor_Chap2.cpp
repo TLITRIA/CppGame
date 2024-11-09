@@ -27,8 +27,8 @@ void Actor_Chap2::Update(float deltaTime)
 {
 	if (mState == EActive)
 	{
-		UpdateComponents(deltaTime);
-		UpdateActor(deltaTime);
+		Actor_Chap2::UpdateComponents(deltaTime);
+		Actor_Chap2::UpdateActor(deltaTime);
 	}
 }
 

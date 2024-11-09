@@ -50,5 +50,5 @@ void SpriteComponent_Chap2::Draw(SDL_Renderer* renderer)
 void SpriteComponent_Chap2::SetTexture(SDL_Texture* texture)
 {
 	mTexture = texture;
-	SDL_QueryTexture(mTexture, nullptr, nullptr, &mTexWidth, &mTexHeight);
+	SDL_QueryTexture(texture, nullptr, nullptr, &mTexWidth, &mTexHeight); // £¿£¿
 }

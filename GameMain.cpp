@@ -12,7 +12,6 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
     GameChapt2_2D game;
     bool ret = game.Initialize();
 

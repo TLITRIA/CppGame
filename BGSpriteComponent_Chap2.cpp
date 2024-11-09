@@ -1,7 +1,7 @@
 #include "BGSpriteComponent_Chap2.h"
 
 #include "SpriteComponent_Chap2.h"
-#include "Component_Chap2.h"
+//#include "Component_Chap2.h"
 #include "Actor_Chap2.h"
 //#include "GameChapt2_2D.h"
 
@@ -14,7 +14,7 @@ BGSpriteComponent_Chap2::BGSpriteComponent_Chap2(Actor_Chap2* owner, int drawOrd
 
 void BGSpriteComponent_Chap2::Update(float deltaTime)
 {
-	SpriteComponent_Chap2::Update(deltaTime);
+	SpriteComponent_Chap2::Update(deltaTime); // £¿£¿
 
 	for (auto& bg : mBGTextures)
 	{
@@ -32,12 +32,11 @@ void BGSpriteComponent_Chap2::Draw(SDL_Renderer* renderer)
 		// Assume screen size dimensions
 		r.w = static_cast<int>(mScreenSize.x);
 		r.h = static_cast<int>(mScreenSize.y);
-		// Center thr rectangle arounf the positopm of  the owner
-		class Actor_Chap2* owner = GetActor();
+		// Center thr rectangle arounf the positopm of the owner
+		auto owner = GetOwner();
 		r.x = static_cast<int>(owner->GetPosition().x - r.w / 2 + bg.mOffset.x);
 		r.x = static_cast<int>(owner->GetPosition().x - r.w / 2 + bg.mOffset.x);
 		
-
 		SDL_RenderCopy(renderer, bg.mTexture, nullptr, &r);
 	}
 }

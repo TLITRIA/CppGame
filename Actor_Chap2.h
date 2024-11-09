@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "Math.h"
 #include "Vector2.h"
 
 class Actor_Chap2
@@ -25,7 +24,7 @@ public:
 	State GetState() const { return mState; }
 	void SetState(State state) { mState = state; }
 	float GetScale() const { return mScale; }
-	void SetScale(int scale) { mScale = scale; }
+	void SetScale(float scale) { mScale = scale; }
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
 

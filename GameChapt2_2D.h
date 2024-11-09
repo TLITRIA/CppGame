@@ -1,7 +1,7 @@
 #pragma once
+#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <iostream>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -10,7 +10,6 @@ class GameChapt2_2D
 {
 public:
 	GameChapt2_2D();
-
 	bool Initialize();
 	void RunLoop();
 	void ShutDown();
@@ -26,7 +25,6 @@ private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
-
 	void LoadData();
 	void UnloadData();
 
