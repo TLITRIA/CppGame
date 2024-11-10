@@ -17,14 +17,13 @@ Ship_Chap2::Ship_Chap2(GameChapt2_2D* game)
 		game->GetTexture("Assets/Ship03.png"),
 		game->GetTexture("Assets/Ship04.png")
 	};
-	asc->SetAnimTexture(anims);
+	asc->SetAnimTextures(anims);
 }
 
 void Ship_Chap2::UpdateActor(float deltaTime)
 {
-	Actor_Chap2::Update(deltaTime);
+	Actor_Chap2::UpdateActor(deltaTime); // Actor_Chap2::Update(deltaTime); //  Ô­À´ÊÇ
 	Vector2 pos = GetPosition();
-	std::cout << pos.x << pos.y << "\n";
 	pos.x += mRightSpeed * deltaTime;
 	pos.y += mDownSpeed * deltaTime;
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Vector2.h"
+#include "Math.h"
 
 class Actor_Chap2
 {
@@ -16,8 +16,8 @@ public:
 	virtual ~Actor_Chap2();
 
 	void Update(float deltaTime);
-	virtual void UpdateActor(float deltaTime);
 	void UpdateComponents(float deltaTime);
+	virtual void UpdateActor(float deltaTime);
 	// Getters/setters
 	const Vector2& GetPosition() const { return mPosition; }
 	void SetPosition(const Vector2& position) { mPosition = position; }

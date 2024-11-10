@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL.h>
-#include "Vector2.h"
+#include "Math.h"
 
 class GameChapt1_Pong
 {

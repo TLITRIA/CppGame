@@ -1,26 +1,19 @@
 ﻿// GameMain.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 #define SDL_MAIN_HANDLED
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-
-#include "GameSkeleton.h"
-#include "GameChapt1_Pong.h"
 #include "GameChapt2_2D.h"
 
 int main()
 {
-    std::cout << "__cplusplus = " << __cplusplus << std::endl; // 199711 版本过低
-    /*GameChapt2_2D game;
+    //std::cout << "__cplusplus = " << __cplusplus << std::endl; // 199711 版本过低
+    GameChapt2_2D game;
     bool ret = game.Initialize();
-
-    std::cout << (ret ? "success" : "false");
+    //std::cout << (ret ? "success" : "false");
     if (ret)
     {
         game.RunLoop();
     }
-    game.ShutDown();*/
+    game.ShutDown();
     return 0;
 }
 

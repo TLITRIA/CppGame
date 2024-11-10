@@ -2,11 +2,11 @@
 
 #include "GameChapt2_2D.h"
 #include "Component_Chap2.h"
-
+#include <algorithm>
 
 Actor_Chap2::Actor_Chap2(GameChapt2_2D* game)
 	: mState(EActive)
-	, mPosition(Vector2{0.0f, 0.0f})
+	, mPosition(Vector2::Zero)
 	, mScale(1.0f)
 	, mRotation(0.0f)
 	, mGame(game)
@@ -27,9 +27,9 @@ void Actor_Chap2::Update(float deltaTime)
 {
 	if (mState == EActive)
 	{
-		std::cout << __FUNCTION__ << ":" << __LINE__ << __cplusplus << "\n";
+		//std::cout << __FUNCTION__ << ":" << __LINE__ << __cplusplus << "\n";
 		UpdateComponents(deltaTime);
-		Actor_Chap2::UpdateActor(deltaTime);   // CRTP
+		UpdateActor(deltaTime); 
 	}
 }
 
@@ -41,7 +41,7 @@ void Actor_Chap2::UpdateComponents(float deltaTime)
 {
 	for (auto comp : mComponents)
 	{
-		std::cout << __FUNCTION__ << ":" << __LINE__ << "\n";
+		//std::cout << __FUNCTION__ << ":" << __LINE__ << "\n";
 		comp->Update(deltaTime);
 	}
 }
@@ -53,7 +53,9 @@ void Actor_Chap2::AddComponent(Component_Chap2* component)
 	for (; iter != mComponents.end(); ++iter)
 	{
 		if (myOrder < (*iter)->GetUpdateOrder())
+		{
 			break;
+		}
 	}
 	mComponents.insert(iter, component);
 }

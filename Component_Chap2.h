@@ -7,8 +7,6 @@ public:
 
 	virtual void Update(float deltaTime);
 	int GetUpdateOrder() const { return mUpdateOrder; }
-
-	class Actor_Chap2* const GetOwner() { return mOwner; }
 protected:
 	class Actor_Chap2* mOwner;
 	int mUpdateOrder;

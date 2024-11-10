@@ -1,8 +1,4 @@
 #include "SpriteComponent_Chap2.h"
-
-#include <iostream>
-#include <cmath>
-
 #include "Actor_Chap2.h"
 #include "GameChapt2_2D.h"
 
@@ -42,13 +38,12 @@ void SpriteComponent_Chap2::Draw(SDL_Renderer* renderer)
 		r.y = static_cast<int>(mOwner->GetPosition().y - r.h / 2);
 
 		SDL_RenderCopyEx(renderer, mTexture, nullptr, &r,
-			ToDegree(mOwner->GetRotation()	), nullptr, SDL_FLIP_NONE
-		);
+			ToDegree(mOwner->GetRotation()	), nullptr, SDL_FLIP_NONE);
 	}
 }
 
 void SpriteComponent_Chap2::SetTexture(SDL_Texture* texture)
 {
 	mTexture = texture;
-	SDL_QueryTexture(texture, nullptr, nullptr, &mTexWidth, &mTexHeight); // £¿£¿
+	SDL_QueryTexture(texture, nullptr, nullptr, &mTexWidth, &mTexHeight);
 }

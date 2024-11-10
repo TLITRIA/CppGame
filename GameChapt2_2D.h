@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <SDL.h>
-#include <SDL_image.h>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -39,7 +38,7 @@ private:
 	
 	bool mIsRunning;
 	bool mUpdatingActors;
-
+	
 	class Ship_Chap2* mShip;
 };
 

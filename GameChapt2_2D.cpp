@@ -1,17 +1,15 @@
 #include "GameChapt2_2D.h"
-
+#include <SDL_image.h>
 #include <algorithm>
 #include "Actor_Chap2.h"
 #include "SpriteComponent_Chap2.h"
 #include "Ship_Chap2.h"
 #include "BGSpriteComponent_Chap2.h"
 
-#include "Vector2.h"
-
 
 const int window_w = 1024;
 const int window_h = 768;
-const int FPS = 24;
+const int FPS = 100;
 
 GameChapt2_2D::GameChapt2_2D()
 	: mWindow(nullptr)
@@ -96,7 +94,6 @@ void GameChapt2_2D::ProcessInput()
 
 void GameChapt2_2D::UpdateGame()
 {
-
 	/* Wait until 1000/FPS has elapsed since last frame */
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + (int)(1000.0f / FPS)));
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
@@ -153,16 +150,16 @@ void GameChapt2_2D::LoadData()
 {
 	// create player's ship 
 	mShip = new Ship_Chap2(this);
-	mShip->SetPosition(Vector2{100.0f, 384.0f});
+	mShip->SetPosition(Vector2(100.0f, 384.0f));
 	mShip->SetScale(1.5f);
 
 	// Create actor for the background
 	Actor_Chap2* temp = new Actor_Chap2(this);
-	temp->SetPosition(Vector2{ 512.0f, 384.0f });
+	temp->SetPosition(Vector2( 512.0f, 384.0f ));
 
 	// Create the farBack background
 	BGSpriteComponent_Chap2* bg = new BGSpriteComponent_Chap2(temp);
-	bg->SetScreenSize(Vector2{(float)window_w, (float)window_h});
+	bg->SetScreenSize(Vector2((float)window_w, (float)window_h));
 	std::vector<SDL_Texture*> bgtexs = {
 		GetTexture("Assets/Farback01.png"),
 		GetTexture("Assets/Farback02.png")
@@ -172,7 +169,7 @@ void GameChapt2_2D::LoadData()
 
 	// Create the Closer background
 	bg = new BGSpriteComponent_Chap2(temp, 50);
-	bg->SetScreenSize(Vector2{ (float)window_w, (float)window_h });
+	bg->SetScreenSize(Vector2( (float)window_w, (float)window_h ));
 	bgtexs = {
 		GetTexture("Assets/Stars.png"),
 		GetTexture("Assets/Stars.png")
@@ -197,14 +194,6 @@ void GameChapt2_2D::UnloadData()
 	mTextures.clear();
 }
 
-void GameChapt2_2D::ShutDown()
-{
-	UnloadData();
-	IMG_Quit();
-	SDL_DestroyWindow(mWindow);
-	SDL_DestroyRenderer(mRenderer);
-	SDL_Quit();
-}
 
 void GameChapt2_2D::AddActor(Actor_Chap2* actor)
 {
@@ -268,16 +257,16 @@ SDL_Texture* GameChapt2_2D::GetTexture(const std::string& fileName)
 		SDL_Surface* surf = IMG_Load(fileName.c_str());
 		if (!surf)
 		{
-			SDL_Log("Fail to load texture file %s", fileName.c_str());
+			SDL_Log("Failed to load texture file %s", fileName.c_str());
 			return nullptr;
 		}
 
 		// create texture from surface	
 		tex = SDL_CreateTextureFromSurface(mRenderer, surf);
 		SDL_FreeSurface(surf);
-		if (!surf)
+		if (!tex)
 		{
-			SDL_Log("Fail to convert surface to texture for %s", fileName.c_str());
+			SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
 			return nullptr;
 		}
 		mTextures.emplace(fileName.c_str(), tex); // ´íÎó
@@ -285,3 +274,12 @@ SDL_Texture* GameChapt2_2D::GetTexture(const std::string& fileName)
 	return tex; // ´íÎó
 }
 
+
+void GameChapt2_2D::ShutDown()
+{
+	UnloadData();
+	IMG_Quit();
+	SDL_DestroyRenderer(mRenderer);
+	SDL_DestroyWindow(mWindow);
+	SDL_Quit();
+}

@@ -1,12 +1,9 @@
 #include "BGSpriteComponent_Chap2.h"
 
-#include "SpriteComponent_Chap2.h"
-//#include "Component_Chap2.h"
 #include "Actor_Chap2.h"
-//#include "GameChapt2_2D.h"
 
 
-BGSpriteComponent_Chap2::BGSpriteComponent_Chap2(Actor_Chap2* owner, int drawOrder)
+BGSpriteComponent_Chap2::BGSpriteComponent_Chap2(class Actor_Chap2* owner, int drawOrder)
 	: SpriteComponent_Chap2(owner, drawOrder)
 	, mScrollSpeed(0.0f)
 {
@@ -14,8 +11,7 @@ BGSpriteComponent_Chap2::BGSpriteComponent_Chap2(Actor_Chap2* owner, int drawOrd
 
 void BGSpriteComponent_Chap2::Update(float deltaTime)
 {
-	SpriteComponent_Chap2::Update(deltaTime); // £¿£¿
-
+	SpriteComponent_Chap2::Update(deltaTime); 
 	for (auto& bg : mBGTextures)
 	{
 		bg.mOffset.x += mScrollSpeed * deltaTime;
@@ -33,9 +29,8 @@ void BGSpriteComponent_Chap2::Draw(SDL_Renderer* renderer)
 		r.w = static_cast<int>(mScreenSize.x);
 		r.h = static_cast<int>(mScreenSize.y);
 		// Center thr rectangle arounf the positopm of the owner
-		auto owner = GetOwner();
-		r.x = static_cast<int>(owner->GetPosition().x - r.w / 2 + bg.mOffset.x);
-		r.x = static_cast<int>(owner->GetPosition().x - r.w / 2 + bg.mOffset.x);
+		r.x = static_cast<int>(mOwner->GetPosition().x - r.w / 2 + bg.mOffset.x);
+		r.y = static_cast<int>(mOwner->GetPosition().y - r.h / 2 + bg.mOffset.y);
 		
 		SDL_RenderCopy(renderer, bg.mTexture, nullptr, &r);
 	}

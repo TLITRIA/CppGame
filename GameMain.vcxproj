@@ -108,6 +108,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,6 +142,7 @@
     <ClCompile Include="GameChapt2_2D.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameSkeleton.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Ship_Chap2.cpp" />
     <ClCompile Include="SpriteComponent_Chap2.cpp" />
   </ItemGroup>
@@ -150,9 +154,9 @@
     <ClInclude Include="GameChapt1_Pong.h" />
     <ClInclude Include="GameChapt2_2D.h" />
     <ClInclude Include="GameSkeleton.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Ship_Chap2.h" />
     <ClInclude Include="SpriteComponent_Chap2.h" />
-    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
