@@ -6,7 +6,7 @@ const int window_w = 1024;
 const int wall_thinkness = 20;		// 墙的厚度
 const int paddle_thinkness = 10;	// 板的厚度
 const int paddle_length = 100;		// 板的长度
-
+const int ball_r = 5;				// “球”的半径
 const int FPS = 144;
 Game::Game()
 	: mWindow(nullptr)
@@ -144,11 +144,17 @@ void Game::GenerateOutput()
 		static_cast<int>(mPaddlePos.x),
 		static_cast<int>(mPaddlePos.y - paddle_length / 2),
 		paddle_thinkness,
-		static_cast<int>(paddle_length)
+		paddle_length
 	};
 	SDL_RenderFillRect(mRenderer, &paddle);
-
-
+	// 球
+	SDL_Rect ball = {
+		static_cast<int>(mBallPos.x - ball_r),
+		static_cast<int>(mBallPos.y - ball_r),
+		ball_r*2,
+		ball_r*2		
+	};
+	SDL_RenderFillRect(mRenderer, &ball);
 
 
 
