@@ -110,10 +110,15 @@ void Game::UpdateGame()
 	if (mPaddleDir != 0)
 	{
 		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
-		if (mPaddlePos.y + paddle_length / 2 + wall_thinkness > window_h ||
-			mPaddlePos.y < paddle_length / 2 + wall_thinkness )
-			mPaddlePos.y -= mPaddleDir * 300.0f * deltaTime;
+		if (mPaddlePos.y + paddle_length / 2 + wall_thinkness > window_h)
+			mPaddlePos.y = window_h - (paddle_length / 2 + wall_thinkness);
+		if (mPaddlePos.y < paddle_length / 2 + wall_thinkness)
+			mPaddlePos.y = paddle_length / 2 + wall_thinkness;
 	}
+
+	// ball
+	mBallPos.x += mBallVel.x * deltaTime;
+	mBallPos.y += mBallVel.y * deltaTime;
 	
 }
 
