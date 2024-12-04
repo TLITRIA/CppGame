@@ -6,6 +6,8 @@ const int window_w = 1024;
 const int wall_thinkness = 20;		// 墙的厚度
 const int paddle_thinkness = 10;	// 板的厚度
 const int paddle_length = 100;		// 板的长度
+
+const int FPS = 12;
 Game::Game()
 	: mWindow(nullptr)
 	, mRenderer(nullptr)
@@ -82,10 +84,30 @@ void Game::ProcessInput()
 	{
 		isRunning = false;
 	}
+
+	// paddle
+	mPaddleDir = 0;
+	if (state[SDL_SCANCODE_W])
+	{
+		mPaddleDir -= 1;
+	}
+	if (state[SDL_SCANCODE_S])
+	{
+		mPaddleDir += 1;
+	}
+
 }
 
 void Game::UpdateGame()
 {
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + static_cast<int>(1000.0f / FPS)));
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+	if (deltaTime > 0.05f)
+		deltaTime = 0.05f;
+	mTicksCount = SDL_GetTicks();
+	
+	// paddle 
+	mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
 }
 
 void Game::GenerateOutput()
