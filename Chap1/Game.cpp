@@ -40,7 +40,7 @@ bool Game::Initialize()
 	}
 
 	mBallPos = Vector2{ window_w / 2, window_h / 2 };
-	mBallVel = Vector2{ -200.0f, 234.0f };
+	mBallVel = Vector2{ 500.0f, 0.0f };
 	mPaddlePos = Vector2{ 20.0f, window_h / 2 };
 	return true;
 }
@@ -60,6 +60,7 @@ void Game::Shutdown()
 	SDL_DestroyWindow(mWindow);
 	SDL_DestroyRenderer(mRenderer);
 	SDL_Quit();
+	std::cout << " Game Over! " << std::endl;
 }
 
 void Game::ProcessInput()
@@ -119,7 +120,34 @@ void Game::UpdateGame()
 	// ball
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime;
-	
+	if (mBallPos.y > window_h - wall_thinkness - ball_r)
+	{
+		mBallPos.y -= 2 * (mBallPos.y - (window_h - wall_thinkness - ball_r));
+		mBallVel.y *= -1;
+	}
+
+	if (mBallPos.y < wall_thinkness + ball_r)
+	{
+		mBallPos.y += 2 * (wall_thinkness + ball_r - mBallPos.y);
+		mBallVel.y *= -1;
+	}
+
+	if (mBallPos.x > window_w - wall_thinkness - ball_r)
+	{
+		mBallPos.x -= 2 * (mBallPos.x - (window_w - wall_thinkness - ball_r));
+		mBallVel.x *= -1;
+	}
+
+	if (mBallPos.x < mPaddlePos.x + paddle_thinkness/2 + ball_r 
+		&& mBallPos.y + ball_r > mPaddlePos.y - paddle_length / 2
+		&& mBallPos.y - ball_r < mPaddlePos.y + paddle_length / 2)
+	{
+		mBallPos.x += 2 * (mBallPos.x - mPaddlePos.x - paddle_thinkness / 2 + ball_r);
+		mBallVel.x *= -1;
+	}
+
+	if (mBallPos.x < ball_r)
+		isRunning = false;
 }
 
 void Game::GenerateOutput()
