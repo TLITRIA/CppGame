@@ -1,4 +1,7 @@
-﻿#include "Game.h"
+﻿/*规定P1在左，P2在右
+* 
+*/
+#include "Game.h"
 
 
 const int window_h = 768;
@@ -13,9 +16,12 @@ Game::Game()
 	, mRenderer(nullptr)
 	, mTicksCount(0)
 	, isRunning(true)
-	, mPaddleDir(0)
+	, mPaddleDir_P1(0)
+	, mPaddleDir_P2(0)
 {
 }
+
+
 
 bool Game::Initialize()
 {
@@ -40,8 +46,9 @@ bool Game::Initialize()
 	}
 
 	mBallPos = Vector2{ window_w / 2, window_h / 2 };
-	mBallVel = Vector2{ 500.0f, 0.0f };
-	mPaddlePos = Vector2{ 20.0f, window_h / 2 };
+	mBallVel = Vector2{ 200.0f, 0.0f };
+	mPaddlePos_P1 = Vector2{ 20.0f, window_h / 2 };
+	mPaddlePos_P2 = Vector2{ window_w -  20.0f, window_h / 2 };
 	return true;
 }
 
@@ -87,16 +94,17 @@ void Game::ProcessInput()
 	}
 
 	// paddle
-	mPaddleDir = 0;
-	if (state[SDL_SCANCODE_UP])
-	{
-		mPaddleDir -= 1;
-	}
-	if (state[SDL_SCANCODE_DOWN])
-	{
-		mPaddleDir += 1;
-	}
+	mPaddleDir_P1 = 0;
+	if (state[SDL_SCANCODE_W])
+		mPaddleDir_P1 -= 1;
+	if (state[SDL_SCANCODE_S])
+		mPaddleDir_P1 += 1;
 
+	mPaddleDir_P2 = 0;
+	if (state[SDL_SCANCODE_I])
+		mPaddleDir_P2 -= 1;
+	if (state[SDL_SCANCODE_J])
+		mPaddleDir_P2 += 1;
 }
 
 void Game::UpdateGame()
@@ -108,45 +116,62 @@ void Game::UpdateGame()
 	mTicksCount = SDL_GetTicks();
 	
 	// paddle 
-	if (mPaddleDir != 0)
+	if (mPaddleDir_P1 != 0)
 	{
-		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
-		if (mPaddlePos.y + paddle_length / 2 + wall_thinkness > window_h)
-			mPaddlePos.y = window_h - (paddle_length / 2 + wall_thinkness);
-		if (mPaddlePos.y < paddle_length / 2 + wall_thinkness)
-			mPaddlePos.y = paddle_length / 2 + wall_thinkness;
+		mPaddlePos_P1.y += mPaddleDir_P1 * 300.0f * deltaTime;
+		if (mPaddlePos_P1.y + paddle_length / 2 + wall_thinkness > window_h)
+			mPaddlePos_P1.y = window_h - (paddle_length / 2 + wall_thinkness);
+		if (mPaddlePos_P1.y < paddle_length / 2 + wall_thinkness)
+			mPaddlePos_P1.y = paddle_length / 2 + wall_thinkness;
+	}
+
+	if (mPaddleDir_P2 != 0)
+	{
+		mPaddlePos_P2.y += mPaddleDir_P2 * 300.0f * deltaTime;
+		if (mPaddlePos_P2.y + paddle_length / 2 + wall_thinkness > window_h)
+			mPaddlePos_P2.y = window_h - (paddle_length / 2 + wall_thinkness);
+		if (mPaddlePos_P2.y < paddle_length / 2 + wall_thinkness)
+			mPaddlePos_P2.y = paddle_length / 2 + wall_thinkness;
 	}
 
 	// ball
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime;
-	if (mBallPos.y > window_h - wall_thinkness - ball_r)
+	if (mBallPos.y > window_h - wall_thinkness - ball_r)// 底
 	{
 		mBallPos.y -= 2 * (mBallPos.y - (window_h - wall_thinkness - ball_r));
 		mBallVel.y *= -1;
 	}
 
-	if (mBallPos.y < wall_thinkness + ball_r)
+	if (mBallPos.y < wall_thinkness + ball_r)	// 顶
 	{
 		mBallPos.y += 2 * (wall_thinkness + ball_r - mBallPos.y);
 		mBallVel.y *= -1;
 	}
 
-	if (mBallPos.x > window_w - wall_thinkness - ball_r)
+	//if (mBallPos.x > window_w - wall_thinkness - ball_r) // 右墙
+	//{
+	//	mBallPos.x -= 2 * (mBallPos.x - (window_w - wall_thinkness - ball_r));
+	//	mBallVel.x *= -1;
+	//}
+
+	if (mBallPos.x + ball_r > mPaddlePos_P2.x - paddle_thinkness / 2 	// 右板子
+		&& mBallPos.y + ball_r > mPaddlePos_P2.y - paddle_length / 2
+		&& mBallPos.y - ball_r < mPaddlePos_P2.y + paddle_length / 2)
 	{
-		mBallPos.x -= 2 * (mBallPos.x - (window_w - wall_thinkness - ball_r));
+		mBallPos.x -= 2 * (mBallPos.x + ball_r - mPaddlePos_P2.x + paddle_thinkness / 2);
 		mBallVel.x *= -1;
 	}
 
-	if (mBallPos.x < mPaddlePos.x + paddle_thinkness/2 + ball_r 
-		&& mBallPos.y + ball_r > mPaddlePos.y - paddle_length / 2
-		&& mBallPos.y - ball_r < mPaddlePos.y + paddle_length / 2)
+	if (mBallPos.x < mPaddlePos_P1.x + paddle_thinkness/2 + ball_r	// 左板子
+		&& mBallPos.y + ball_r > mPaddlePos_P1.y - paddle_length / 2
+		&& mBallPos.y - ball_r < mPaddlePos_P1.y + paddle_length / 2)
 	{
-		mBallPos.x += 2 * (mBallPos.x - mPaddlePos.x - paddle_thinkness / 2 + ball_r);
+		mBallPos.x += 2 * (mBallPos.x - mPaddlePos_P1.x - paddle_thinkness / 2 + ball_r);
 		mBallVel.x *= -1;
 	}
 
-	if (mBallPos.x < ball_r)
+	if (mBallPos.x < ball_r || mBallPos.x + ball_r > window_w)
 		isRunning = false;
 }
 
@@ -170,12 +195,19 @@ void Game::GenerateOutput()
 	fillRect = { 0,window_h-wall_thinkness, window_w, wall_thinkness };
 	SDL_RenderFillRect(mRenderer, &fillRect);
 	// 右
-	fillRect = { window_w-wall_thinkness,0, wall_thinkness, window_h };
-	SDL_RenderFillRect(mRenderer, &fillRect);
+	//fillRect = { window_w-wall_thinkness,0, wall_thinkness, window_h };
+	//SDL_RenderFillRect(mRenderer, &fillRect);
 	// 板子
 	SDL_Rect paddle = {
-		static_cast<int>(mPaddlePos.x),
-		static_cast<int>(mPaddlePos.y - paddle_length / 2),
+		static_cast<int>(mPaddlePos_P1.x),
+		static_cast<int>(mPaddlePos_P1.y - paddle_length / 2),
+		paddle_thinkness,
+		paddle_length
+	};
+	SDL_RenderFillRect(mRenderer, &paddle);
+	paddle = {
+		static_cast<int>(mPaddlePos_P2.x),
+		static_cast<int>(mPaddlePos_P2.y - paddle_length / 2),
 		paddle_thinkness,
 		paddle_length
 	};
@@ -188,8 +220,6 @@ void Game::GenerateOutput()
 		ball_r*2		
 	};
 	SDL_RenderFillRect(mRenderer, &ball);
-
-
 
 	SDL_RenderPresent(mRenderer);
 }

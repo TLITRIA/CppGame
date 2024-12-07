@@ -22,7 +22,14 @@ private:
 	Uint32 mTicksCount;
 	bool isRunning;
 
-	Vector2 mBallPos, mBallVel, mPaddlePos;
-	int mPaddleDir;
+	Vector2 mBallPos, mBallVel;
+		
+		
+	// P1
+	Vector2 mPaddlePos_P1;
+	int mPaddleDir_P1;
 
+	// P2
+	Vector2 mPaddlePos_P2;
+	int mPaddleDir_P2;
 };
