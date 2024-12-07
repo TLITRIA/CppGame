@@ -167,7 +167,7 @@ void Game::UpdateGame()
 		&& mBallPos.y + ball_r > mPaddlePos_P1.y - paddle_length / 2
 		&& mBallPos.y - ball_r < mPaddlePos_P1.y + paddle_length / 2)
 	{
-		mBallPos.x += 2 * (mBallPos.x - mPaddlePos_P1.x - paddle_thinkness / 2 + ball_r);
+		mBallPos.x -= 2 * (mBallPos.x - mPaddlePos_P1.x - paddle_thinkness / 2 - ball_r);
 		mBallVel.x *= -1;
 	}
 
