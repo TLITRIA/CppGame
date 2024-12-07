@@ -26,7 +26,7 @@ private:
 		
 		
 	// P1
-	Vector2 mPaddlePos_P1;
+	Vector2 mPaddlePos_P1;	// 代表板子的几何中心点
 	int mPaddleDir_P1;
 
 	// P2

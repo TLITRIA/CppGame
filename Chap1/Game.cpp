@@ -5,7 +5,7 @@
 
 
 const int window_h = 768;
-const int window_w = 1024;
+const int window_w = 124;
 const int wall_thinkness = 20;		// 墙的厚度
 const int paddle_thinkness = 10;	// 板的厚度
 const int paddle_length = 100;		// 板的长度
@@ -46,7 +46,7 @@ bool Game::Initialize()
 	}
 
 	mBallPos = Vector2{ window_w / 2, window_h / 2 };
-	mBallVel = Vector2{ 200.0f, 0.0f };
+	mBallVel = Vector2{ 50.0f, 0.0f };
 	mPaddlePos_P1 = Vector2{ 20.0f, window_h / 2 };
 	mPaddlePos_P2 = Vector2{ window_w -  20.0f, window_h / 2 };
 	return true;
@@ -199,14 +199,14 @@ void Game::GenerateOutput()
 	//SDL_RenderFillRect(mRenderer, &fillRect);
 	// 板子
 	SDL_Rect paddle = {
-		static_cast<int>(mPaddlePos_P1.x),
+		static_cast<int>(mPaddlePos_P1.x - paddle_thinkness / 2),
 		static_cast<int>(mPaddlePos_P1.y - paddle_length / 2),
 		paddle_thinkness,
 		paddle_length
 	};
 	SDL_RenderFillRect(mRenderer, &paddle);
 	paddle = {
-		static_cast<int>(mPaddlePos_P2.x),
+		static_cast<int>(mPaddlePos_P2.x - paddle_thinkness / 2),
 		static_cast<int>(mPaddlePos_P2.y - paddle_length / 2),
 		paddle_thinkness,
 		paddle_length
